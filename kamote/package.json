@@ -1,0 +1,10 @@
+{
+  "name": "lspu-siems",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LSPU Student Information and Enrollment Management System",
+  "scripts": {
+    "start": "npx serve@14.2.4 . -l 8080",
+    "check": "node --check js/app.js && node --check js/landing.js && node --check js/security.js && node --check js/config.js"
+  }
+}

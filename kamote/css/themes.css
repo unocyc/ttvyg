@@ -1,0 +1,251 @@
+/* Theme controls, ambient effects, and dark-mode surfaces */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --navy: #d7e5f7;
+  --green: #56bd7e;
+  --red: #ff7b82;
+  --gold: #f0c55e;
+  --blue: #82aaff;
+  --ink: #e6ecf2;
+  --muted: #a4b0bf;
+  --line: #334252;
+  --canvas: #111821;
+  --paper: #1b2632;
+  --surface-raised: #222f3d;
+  --surface-soft: #17212c;
+  --ambient-dot: #c4d2e20b;
+  --ambient-orb-one: #4fc47a22;
+  --ambient-orb-two: #5785d122;
+}
+:root {
+  --ambient-dot: #16345c0b;
+  --ambient-orb-one: #2b8a5420;
+  --ambient-orb-two: #4169ad1d;
+}
+
+main { position: relative; z-index: 1; }
+.background-effects { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+.background-orb {
+  width: min(45vw, 560px);
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: .48;
+  background: radial-gradient(circle, var(--ambient-orb-one), transparent 68%);
+  animation: ambient-float 30s ease-in-out infinite alternate;
+}
+.background-orb:first-child { top: -24%; left: -20%; }
+.background-orb:last-child { right: -24%; bottom: -34%; background: radial-gradient(circle, var(--ambient-orb-two), transparent 68%); animation-delay: -12s; }
+@keyframes ambient-float {
+  to { transform: translate3d(4vw, 3vh, 0) scale(1.08); }
+}
+.auth-screen { background: transparent; }
+
+.theme-toggle {
+  min-height: 38px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .16s, border-color .16s, transform .16s;
+}
+.theme-toggle:hover { transform: translateY(-1px); border-color: #9aabbb; }
+.theme-toggle[aria-pressed="true"] { border-color: #57745e; }
+.theme-toggle-icon, .theme-toggle-icon svg { width: 17px; height: 17px; display: block; }
+.theme-sun { display: none !important; }
+:root[data-theme="dark"] .theme-sun { display: block !important; }
+:root[data-theme="dark"] .theme-moon { display: none !important; }
+.theme-toggle-auth {
+  position: fixed;
+  z-index: 12;
+  top: 16px;
+  right: 18px;
+  min-height: 38px;
+}
+.auth-screen:not(.login-first) .theme-toggle-auth { display: none; }
+.auth-screen.login-first .landing-hero { padding-top: 72px; }
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+.app-shell::before, .app-shell::after {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+}
+.app-shell::before {
+  inset: -25%;
+  background: radial-gradient(ellipse at 83% 18%, #3c987018, transparent 36%), radial-gradient(ellipse at 17% 84%, #5487ce12, transparent 34%);
+  animation: ambient-drift 38s ease-in-out infinite alternate;
+}
+.app-shell::after {
+  inset: 0;
+  opacity: .38;
+  background-image: radial-gradient(var(--ambient-dot, #16345c0b) .7px, transparent .7px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
+}
+@keyframes ambient-drift {
+  to { transform: translate3d(2%, -1.5%, 0) scale(1.03); }
+}
+
+:root[data-theme="dark"] body { color: var(--ink); background: var(--canvas); }
+:root[data-theme="dark"] .auth-screen { color: var(--ink); background: transparent; }
+:root[data-theme="dark"] .auth-card,
+:root[data-theme="dark"] .content-panel,
+:root[data-theme="dark"] .workspace-panel,
+:root[data-theme="dark"] .summary-card,
+:root[data-theme="dark"] .calendar-panel,
+:root[data-theme="dark"] .calendar-agenda,
+:root[data-theme="dark"] .dialog {
+  border-color: var(--line);
+  color: var(--ink);
+  background: var(--paper);
+}
+:root[data-theme="dark"] .tabs { background: var(--surface-soft); }
+:root[data-theme="dark"] .tab { color: var(--muted); }
+:root[data-theme="dark"] .tab[aria-selected="true"] { color: var(--ink); background: var(--surface-raised); }
+:root[data-theme="dark"] .field { color: #d6e0eb; }
+:root[data-theme="dark"] .field input,
+:root[data-theme="dark"] .field select,
+:root[data-theme="dark"] .table-toolbar input,
+:root[data-theme="dark"] .table-toolbar select,
+:root[data-theme="dark"] .form-control {
+  border-color: #405163;
+  color: var(--ink);
+  background: var(--surface-raised);
+}
+:root[data-theme="dark"] .field input::placeholder,
+:root[data-theme="dark"] .table-toolbar input::placeholder { color: #98a7b7; }
+:root[data-theme="dark"] .eye-button { color: #bdc9d6; }
+:root[data-theme="dark"] .eye-button:hover { color: white; background: #ffffff12; }
+:root[data-theme="dark"] .text-button { color: #83d89d; }
+:root[data-theme="dark"] .remember { color: var(--muted); }
+:root[data-theme="dark"] .demo-note { color: #9aa8b8; }
+:root[data-theme="dark"] .storage-warning { border-color: #645532; color: #f0d99c; background: #322c1b; }
+:root[data-theme="dark"] .message { color: #ffb7bb; background: #3a2025; }
+:root[data-theme="dark"] .message.success { color: #a8e2b8; background: #1c3829; }
+:root[data-theme="dark"] .password-strength-track { background: #384453; }
+:root[data-theme="dark"] .password-strength-copy strong { color: #bec9d5; }
+:root[data-theme="dark"] .password-strength-checks span.passed { color: #8fdda7; }
+:root[data-theme="dark"] .primary-button { color: #07150c; }
+:root[data-theme="dark"] .primary-button:hover:not(:disabled) { background: #72d292; }
+
+:root[data-theme="dark"] .site-header {
+  border-color: #334252;
+  background: linear-gradient(90deg, #18232eef, #1b2632f2 52%, #182431ef);
+}
+:root[data-theme="dark"] .site-nav a { color: #c5d0dc; }
+:root[data-theme="dark"] .programs-section,
+:root[data-theme="dark"] .about-section,
+:root[data-theme="dark"] .campuses-section,
+:root[data-theme="dark"] .contact-section {
+  background: radial-gradient(ellipse at 95% 4%, #436eaa18, transparent 45%), linear-gradient(120deg, #17222e, #1b2632 58%, #18252b);
+}
+:root[data-theme="dark"] .section-copy,
+:root[data-theme="dark"] .about-highlight p,
+:root[data-theme="dark"] .program-card p,
+:root[data-theme="dark"] .campus-card p { color: #b0bdca; }
+:root[data-theme="dark"] .about-highlight,
+:root[data-theme="dark"] .contact-panel {
+  border-color: var(--line);
+  background: linear-gradient(135deg, #202f3b, #1b2632);
+}
+:root[data-theme="dark"] .program-card,
+:root[data-theme="dark"] .campus-card,
+:root[data-theme="dark"] .program-card:nth-child(2),
+:root[data-theme="dark"] .program-card:nth-child(3),
+:root[data-theme="dark"] .campus-card:nth-child(2),
+:root[data-theme="dark"] .campus-card:nth-child(3),
+:root[data-theme="dark"] .campus-card:nth-child(4) {
+  border-color: #35485a;
+  background: linear-gradient(145deg, #202c39, #1a2531);
+}
+:root[data-theme="dark"] .program-card:hover,
+:root[data-theme="dark"] .campus-card:hover { border-color: #607890; }
+:root[data-theme="dark"] .landing-action { color: #07150c; }
+:root[data-theme="dark"] .site-header .portal-link { color: #07150c; }
+:root[data-theme="dark"] .landing-action.secondary { color: #eef5f1; }
+:root[data-theme="dark"] .admissions-section .landing-action { color: #1a2636; }
+
+:root[data-theme="dark"] .topbar {
+  border-color: var(--line);
+  background: #1b2632ed;
+}
+:root[data-theme="dark"] .topbar-page { color: #d6e0eb; }
+:root[data-theme="dark"] .logout-button,
+:root[data-theme="dark"] .mobile-nav-toggle,
+:root[data-theme="dark"] .secondary-button,
+:root[data-theme="dark"] .small-button,
+:root[data-theme="dark"] .calendar-controls button {
+  border-color: #405163;
+  color: #dce5ee;
+  background: var(--surface-raised);
+}
+:root[data-theme="dark"] .logout-button:hover,
+:root[data-theme="dark"] .small-button:hover,
+:root[data-theme="dark"] .secondary-button:hover,
+:root[data-theme="dark"] .calendar-controls button:hover { background: #2a3948; }
+:root[data-theme="dark"] .summary-caption,
+:root[data-theme="dark"] .workspace-heading span { color: #a4b0bf; }
+:root[data-theme="dark"] .workspace-card,
+:root[data-theme="dark"] .profile-item,
+:root[data-theme="dark"] .profile-completion,
+:root[data-theme="dark"] .avatar-editor {
+  border-color: var(--line);
+  color: var(--ink);
+  background: var(--surface-raised);
+}
+:root[data-theme="dark"] .workspace-card:hover { border-color: #607890; }
+:root[data-theme="dark"] .profile-progress { background: #344252; }
+:root[data-theme="dark"] .profile-avatar,
+:root[data-theme="dark"] .avatar-editor-preview { border-color: #405163; background: #26373a; }
+:root[data-theme="dark"] .data-table th { border-color: var(--line); color: #aab7c5; }
+:root[data-theme="dark"] .data-table td,
+:root[data-theme="dark"] .activity-item { border-color: #2c3947; color: #d0d9e2; }
+:root[data-theme="dark"] .status { color: #f1d992; background: #3b3421; }
+:root[data-theme="dark"] .status.active,
+:root[data-theme="dark"] .status.enrolled,
+:root[data-theme="dark"] .status.approved { color: #a7e0b5; background: #203b2c; }
+:root[data-theme="dark"] .status.inactive,
+:root[data-theme="dark"] .status.rejected { color: #ffb2b6; background: #40272b; }
+:root[data-theme="dark"] .status.not-enrolled,
+:root[data-theme="dark"] .status.graduated { color: #c3ceda; background: #303a47; }
+:root[data-theme="dark"] .calendar-panel,
+:root[data-theme="dark"] .calendar-agenda { border-color: var(--line); background: #192430; }
+:root[data-theme="dark"] .calendar-day { color: #d3dde7; }
+:root[data-theme="dark"] .calendar-day.outside-month { color: #788797; }
+:root[data-theme="dark"] .calendar-day.is-today { border-color: #4e8d67; color: #86d99e; }
+:root[data-theme="dark"] .calendar-day.is-selected { color: #07150c; }
+:root[data-theme="dark"] .calendar-event { border-color: #344252; }
+:root[data-theme="dark"] .dialog-backdrop { background: #050a11b8; }
+:root[data-theme="dark"] .dialog { box-shadow: 0 22px 60px #0008; }
+:root[data-theme="dark"] .footer-note { color: #9eacba; }
+
+@media (max-width: 700px) {
+  .topbar-right { gap: 8px; }
+  .topbar-right .theme-toggle { width: 36px; min-height: 36px; padding: 0; }
+  .topbar-right .theme-toggle-label { display: none; }
+}
+@media (max-width: 500px) {
+  .theme-toggle-label { display: none; }
+  .theme-toggle { width: 36px; padding: 0; }
+  .auth-screen.login-first .landing-hero { padding-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .background-orb, .app-shell::before { animation: none; }
+}
